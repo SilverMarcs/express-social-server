@@ -9,7 +9,10 @@ import multer from "multer"; // Importing the 'multer' module for handling file 
 import path from "path"; // Importing the 'path' module for working with file and directory paths
 import { fileURLToPath } from "url"; // Importing the 'fileURLToPath' function from the 'url' module to convert a file URL to a file path
 import { register } from "./controllers/auth.js";
+import { createPosts } from "./controllers/posts.js";
+import { verifyToken } from "./middleware/auth.js";
 import authRoutes from "./routes/auth.js";
+import postRoutes from "./routes/posts.js";
 import userRoutes from "./routes/users.js";
 
 /* configuration */
@@ -40,10 +43,12 @@ const upload = multer({ storage }); // Creating a multer instance with the speci
 
 /* routes with files */
 app.post("/auth/register", upload.single("picture"), register);
+app.post("/posts", verifyToken, upload.single("picture"), createPost); // listens/is an endpoint to handle for a POST request to the '/posts' route and calls the createPost function. The verifyToken middleware is passed as the second argument to the post function to verify the JWT token in the request header.
 
 /* routes */
-app.use("/auth", authRoutes); // Using the 'authRoutes' for requests to the '/auth' route
-app.use("/users", userRoutes); // Using the 'userRoutes' for requests to the '/user' route
+app.use("/auth", authRoutes);
+app.use("/users", userRoutes);
+app.use("/posts", postRoutes); // listens for all types of HTTP requests to the '/posts' route and calls the postRoutes function. This can be used to perform authentication or other types of processing before passing on the request to the appropriate endpoint.
 
 /* mongoose */
 const PORT = process.env.PORT || 6001; // Setting the port for the server to listen on
