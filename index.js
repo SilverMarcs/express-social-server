@@ -8,8 +8,9 @@ import morgan from "morgan"; // Importing the 'morgan' module for HTTP request l
 import multer from "multer"; // Importing the 'multer' module for handling file uploads
 import path from "path"; // Importing the 'path' module for working with file and directory paths
 import { fileURLToPath } from "url"; // Importing the 'fileURLToPath' function from the 'url' module to convert a file URL to a file path
-import { register } from "./controllers/auth.js"; // Importing the 'register' function from the './controllers/auth.js' file
-import authRoutes from "./routes/auth.js"; // Importing the 'authRoutes' from the './routes/auth.js' file
+import { register } from "./controllers/auth.js";
+import authRoutes from "./routes/auth.js";
+import userRoutes from "./routes/users.js";
 
 /* configuration */
 const __filename = fileURLToPath(import.meta.url); // Getting the file path of the current module
@@ -42,6 +43,7 @@ app.post("/auth/register", upload.single("picture"), register);
 
 /* routes */
 app.use("/auth", authRoutes); // Using the 'authRoutes' for requests to the '/auth' route
+app.use("/users", userRoutes); // Using the 'userRoutes' for requests to the '/user' route
 
 /* mongoose */
 const PORT = process.env.PORT || 6001; // Setting the port for the server to listen on
