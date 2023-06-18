@@ -9,8 +9,11 @@ import multer from "multer"; // Importing the 'multer' module for handling file 
 import path from "path"; // Importing the 'path' module for working with file and directory paths
 import { fileURLToPath } from "url"; // Importing the 'fileURLToPath' function from the 'url' module to convert a file URL to a file path
 import { register } from "./controllers/auth.js";
-import { createPosts } from "./controllers/posts.js";
+import { createPost } from "./controllers/posts.js";
+import { posts, users } from "./data/data.js";
 import { verifyToken } from "./middleware/auth.js";
+import Post from "./models/Post.js";
+import User from "./models/User.js";
 import authRoutes from "./routes/auth.js";
 import postRoutes from "./routes/posts.js";
 import userRoutes from "./routes/users.js";
@@ -61,6 +64,9 @@ mongoose
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`); // Starting the server and logging a message when the server is running
     });
+    /* ADD ONE TIME ONLY */
+    // User.insertMany(users);
+    // Post.insertMany(posts);
   })
   .catch((err) => {
     console.log(`${err} did not connect`); // Logging an error message if the connection to MongoDB fails
