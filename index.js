@@ -37,8 +37,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage }); // Creating a multer instance with the specified storage configuration
 
+/* routes with files */
+app.post("/auth/register", upload.single("picture"), register);
+
 /* routes */
-app.post("/auth/register", upload.single("picture"), register); // Handling POST requests to the '/auth/register' route with the 'register' function, allowing a single file upload with the field name 'picture'
+app.use("/auth", authRoutes); // Using the 'authRoutes' for requests to the '/auth' route
 
 /* mongoose */
 const PORT = process.env.PORT || 6001; // Setting the port for the server to listen on
