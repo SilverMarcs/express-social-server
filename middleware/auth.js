@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 // This middleware function will be used to verify the JWT sent in the request. next is a function that will be called if the JWT is valid. If the JWT is invalid, an error will be sent in the response.
-const verifyToken = (req, res, next) => {
+export const verifyToken = (req, res, next) => {
   try {
     let token = req.header("Authorization"); // Getting the JWT from the request header
     if (!token) {

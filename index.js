@@ -22,7 +22,7 @@ import userRoutes from "./routes/users.js";
 const __filename = fileURLToPath(import.meta.url); // Getting the file path of the current module
 const __dirname = path.dirname(__filename); // Getting the directory path of the current module
 dotenv.config(); // Loading environment variables from a .env file
-app = express(); // Creating an Express application
+const app = express(); // Creating an Express application
 app.use(express.json()); // Parsing JSON request bodies
 app.use(helmet()); // Setting various HTTP headers for security using Helmet
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" })); // Configuring Cross-Origin Resource Policy for Helmet
