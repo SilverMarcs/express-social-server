@@ -13,6 +13,6 @@ router.get("/:id", verifyToken, getUser); // this line means that when a GET req
 router.get("/:id/friends", verifyToken, getUserFriends);
 
 /* update */
-router.patch("/:id/friendId", verifyToken, addRemoveFriend); //passing in the id of the user and the id of the friend to add/remove
+router.patch("/:id/:friendId", verifyToken, addRemoveFriend); //passing in the id of the user and the id of the friend to add/remove
 
 export default router;
