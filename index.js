@@ -56,13 +56,10 @@ app.use("/posts", postRoutes); // listens for all types of HTTP requests to the 
 /* mongoose */
 const PORT = process.env.PORT || 6001; // Setting the port for the server to listen on
 mongoose
-  .connect(
-    "mongodb+srv://zabirraihan6:RZMPK9KQaPFLbEsE@cluster0.lfbnnln.mongodb.net/test?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  ) // Connecting to MongoDB with the provided URL and options
+  .connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }) // Connecting to MongoDB with the provided URL and options
   .then(() => {
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`); // Starting the server and logging a message when the server is running
