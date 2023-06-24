@@ -29,11 +29,7 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" })); // Config
 app.use(morgan("common")); // Logging HTTP requests using Morgan
 app.use(bodyParser.json({ limit: "30mb", extended: true })); // Parsing JSON request bodies with a limit of 30mb and extended mode
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true })); // Parsing URL-encoded request bodies with a limit of 30mb and extended mode
-app.use(
-  cors({
-    origin: "*",
-  })
-); // Enabling Cross-Origin Resource Sharing
+app.use(cors()); // Enabling Cross-Origin Resource Sharing
 app.use("/assets", express.static(path.join(__dirname, "public/assets"))); // Serving static files from the 'public/assets' directory under the '/assets' route
 
 /* file storage */
