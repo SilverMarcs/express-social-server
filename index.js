@@ -29,7 +29,11 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" })); // Config
 app.use(morgan("common")); // Logging HTTP requests using Morgan
 app.use(bodyParser.json({ limit: "30mb", extended: true })); // Parsing JSON request bodies with a limit of 30mb and extended mode
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true })); // Parsing URL-encoded request bodies with a limit of 30mb and extended mode
-app.use(cors()); // Enabling Cross-Origin Resource Sharing
+app.use(
+  cors({
+    origin: "*",
+  })
+); // Enabling Cross-Origin Resource Sharing
 app.use("/assets", express.static(path.join(__dirname, "public/assets"))); // Serving static files from the 'public/assets' directory under the '/assets' route
 
 /* file storage */
@@ -56,10 +60,13 @@ app.use("/posts", postRoutes); // listens for all types of HTTP requests to the 
 /* mongoose */
 const PORT = process.env.PORT || 6001; // Setting the port for the server to listen on
 mongoose
-  .connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }) // Connecting to MongoDB with the provided URL and options
+  .connect(
+    "mongodb+srv://zabirraihan6:RZMPK9KQaPFLbEsE@cluster0.lfbnnln.mongodb.net/test?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  ) // Connecting to MongoDB with the provided URL and options
   .then(() => {
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`); // Starting the server and logging a message when the server is running
