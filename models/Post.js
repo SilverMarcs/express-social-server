@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import commentSchema from "./Comment.js";
 
 const postSchema = new mongoose.Schema(
   {
@@ -24,8 +25,7 @@ const postSchema = new mongoose.Schema(
       of: Boolean,
     },
     comments: {
-      // currently comments are just strings with no other info. Later change this to be an array of objects that contain the comment and the userId of the user who made the comment.
-      type: Array,
+      type: [commentSchema],
       default: [],
     },
   },

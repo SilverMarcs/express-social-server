@@ -1,5 +1,11 @@
 import express from "express";
-import { getFeedPosts, getUserPosts, likePost } from "../controllers/posts.js";
+import {
+  createComment,
+  getComments,
+  getFeedPosts,
+  getUserPosts,
+  likePost,
+} from "../controllers/posts.js";
 import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
@@ -10,5 +16,6 @@ router.get("/:userId/", verifyToken, getUserPosts); // querying posts only for a
 
 /* update */
 router.patch("/:id/like", verifyToken, likePost); //passing in the id of the post to like
+router.patch("/:id/comments", verifyToken, createComment); //passing in the id of the post to comment on
 
 export default router;
