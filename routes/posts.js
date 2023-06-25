@@ -1,7 +1,6 @@
 import express from "express";
 import {
   createComment,
-  getComments,
   getFeedPosts,
   getUserPosts,
   likePost,

@@ -83,8 +83,7 @@ export const createComment = async (req, res) => {
     const post = await Post.findById(id);
     const newComment = {
       userId,
-      firstName: user.firstName,
-      lastName: user.lastName,
+      commenterName: user.firstName + " " + user.lastName,
       userPicturePath: user.picturePath,
       commentText: commentText,
     };
@@ -93,16 +92,5 @@ export const createComment = async (req, res) => {
     res.status(201).json(post);
   } catch (err) {
     res.status(500).json({ message: err.message });
-  }
-};
-
-/* read */
-export const getComments = async (req, res) => {
-  try {
-    const { postId } = req.params;
-    const comments = await Comment.find({ postId });
-    res.status(200).json(comments);
-  } catch (err) {
-    res.status(404).json({ message: err.message });
   }
 };
