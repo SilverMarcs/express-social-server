@@ -23,7 +23,13 @@ const __filename = fileURLToPath(import.meta.url); // Getting the file path of t
 const __dirname = path.dirname(__filename); // Getting the directory path of the current module
 dotenv.config(); // Loading environment variables from a .env file
 const app = express(); // Creating an Express application
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: false,
+  })
+);
 app.use(express.json()); // Parsing JSON request bodies
 app.use(helmet()); // Setting various HTTP headers for security using Helmet
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" })); // Configuring Cross-Origin Resource Policy for Helmet
