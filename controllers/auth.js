@@ -35,7 +35,7 @@ export const register = async (req, res) => {
     const savedUser = await newUser.save(); // Saving the new user to the database
     res.status(201).json(savedUser); // Sending the saved user in the response if no errors occur
   } catch (err) {
-    res.status(500).json({ error: err.message }); // Sending an error message in the response if an error occurs
+    res.status(500).json({ err }); // Sending an error message in the response if an error occurs
   }
 };
 
@@ -53,6 +53,6 @@ export const login = async (req, res) => {
     delete user.password; // Deleting the password from the user object so that it is not sent in the response
     res.status(200).json({ token, user }); // Sending the user and the JWT in the response if no errors occur
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ err });
   }
 };

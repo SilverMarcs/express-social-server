@@ -23,13 +23,14 @@ const __filename = fileURLToPath(import.meta.url); // Getting the file path of t
 const __dirname = path.dirname(__filename); // Getting the directory path of the current module
 dotenv.config(); // Loading environment variables from a .env file
 const app = express(); // Creating an Express application
+app.use(cors());
 app.use(express.json()); // Parsing JSON request bodies
 app.use(helmet()); // Setting various HTTP headers for security using Helmet
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" })); // Configuring Cross-Origin Resource Policy for Helmet
 app.use(morgan("common")); // Logging HTTP requests using Morgan
 app.use(bodyParser.json({ limit: "30mb", extended: true })); // Parsing JSON request bodies with a limit of 30mb and extended mode
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true })); // Parsing URL-encoded request bodies with a limit of 30mb and extended mode
-app.use(cors()); // Enabling Cross-Origin Resource Sharing
+
 app.use("/assets", express.static(path.join(__dirname, "public/assets"))); // Serving static files from the 'public/assets' directory under the '/assets' route
 
 /* file storage */
