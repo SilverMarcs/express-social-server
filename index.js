@@ -46,7 +46,7 @@ const upload = multer({ storage }); // Creating a multer instance with the speci
 
 /* routes with files */
 app.post("/auth/register", upload.single("picture"), register);
-app.post("/posts", upload.single("picture"), createPost); // listens/is an endpoint to handle for a POST request to the '/posts' route and calls the createPost function. The verifyToken middleware is passed as the second argument to the post function to verify the JWT token in the request header.
+app.post("/posts", verifyToken, upload.single("picture"), createPost); // listens/is an endpoint to handle for a POST request to the '/posts' route and calls the createPost function. The verifyToken middleware is passed as the second argument to the post function to verify the JWT token in the request header.
 
 /* routes */
 app.use("/auth", authRoutes);
