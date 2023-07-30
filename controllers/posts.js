@@ -4,7 +4,7 @@ import User from "../models/User.js";
 /* create */
 export const createPost = async (req, res) => {
   try {
-    const { userId, description, picturePath } = req.body; // all the stuff the forntend sends to us.
+    const { userId, description } = req.body;
     const user = await User.findById(userId); // we find the user who is making the post
     const newPost = new Post({
       userId,
@@ -13,7 +13,7 @@ export const createPost = async (req, res) => {
       location: user.location,
       description,
       userPicturePath: user.picturePath,
-      picturePath,
+      picturePath: req.file.path, // use the path of the uploaded file from Cloudinary as the picturePath
       likes: {},
       comments: [],
     });
