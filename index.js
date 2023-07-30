@@ -68,19 +68,7 @@ const uploadPost = multer({ storage: storagePost });
 
 /* routes with files */
 // the "picture" is the name of the field in the form that is being sent from frontend. this field is not handled in register or createPost functions, but in the uploadUser and uploadPost middlewares above.
-app.post(
-  "/auth/register",
-  uploadUser.single("picture"),
-  (req, res, next) => {
-    if (!req.file) {
-      req.file = {
-        path: "https://res.cloudinary.com/dqk09fmmp/image/upload/v1690745340/empty_irqboq.jpg",
-      }; // set default picture path
-    }
-    next();
-  },
-  register
-);
+app.post("/auth/register", uploadUser.single("picture"), register);
 app.post("/posts", verifyToken, uploadPost.single("picture"), createPost);
 // listens/is an endpoint to handle for a POST request to the '/posts' route and calls the createPost function. The verifyToken middleware is passed as the second argument to the post function to verify the JWT token in the request header.
 

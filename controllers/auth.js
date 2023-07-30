@@ -14,7 +14,9 @@ export const register = async (req, res) => {
       occupation,
     } = req.body;
 
-    const picturePath = req.file.path; // Destructuring the request body
+    const picturePath = req.file // getting this from index.js
+      ? req.file.path
+      : "https://res.cloudinary.com/dqk09fmmp/image/upload/v1690745340/empty_irqboq.jpg";
 
     const salt = await bcrypt.genSalt(); // Generating a salt for hashing the password
     const hashedPassword = await bcrypt.hash(password, salt); // Hashing the password with the salt
