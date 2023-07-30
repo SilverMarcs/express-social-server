@@ -1,4 +1,5 @@
 import bodyParser from "body-parser"; // Importing the 'body-parser' module to parse the request body
+import { v2 as cloudinary } from "cloudinary";
 import cors from "cors"; // Importing the 'cors' module to enable Cross-Origin Resource Sharing
 import dotenv from "dotenv"; // Importing the 'dotenv' module to load environment variables from a .env file
 import express from "express"; // Importing the 'express' module to create an Express application
@@ -6,6 +7,7 @@ import helmet from "helmet"; // Importing the 'helmet' module to set various HTT
 import mongoose from "mongoose"; // Importing the 'mongoose' module to connect to MongoDB
 import morgan from "morgan"; // Importing the 'morgan' module for HTTP request logging
 import multer from "multer"; // Importing the 'multer' module for handling file uploads
+import { CloudinaryStorage } from "multer-storage-cloudinary";
 import path from "path"; // Importing the 'path' module for working with file and directory paths
 import { fileURLToPath } from "url"; // Importing the 'fileURLToPath' function from the 'url' module to convert a file URL to a file path
 import { register } from "./controllers/auth.js";
@@ -39,21 +41,35 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true })); // Parsing UR
 
 app.use("/assets", express.static(path.join(__dirname, "public/assets"))); // Serving static files from the 'public/assets' directory under the '/assets' route
 
+// TODO move cloudinary stuff to separate file
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 /* file storage */
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "public/assets"); // Setting the destination directory for uploaded files
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname); // Setting the filename for uploaded files
+const storageUser = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "user_images",
   },
 });
 
-const upload = multer({ storage }); // Creating a multer instance with the specified storage configuration
+const storagePost = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "post_images",
+  },
+});
+
+const uploadUser = multer({ storage: storageUser });
+const uploadPost = multer({ storage: storagePost });
 
 /* routes with files */
-app.post("/auth/register", upload.single("picture"), register);
-app.post("/posts", verifyToken, upload.single("picture"), createPost); // listens/is an endpoint to handle for a POST request to the '/posts' route and calls the createPost function. The verifyToken middleware is passed as the second argument to the post function to verify the JWT token in the request header.
+app.post("/auth/register", uploadUser.single("picture"), register);
+app.post("/posts", verifyToken, uploadPost.single("picture"), createPost);
+// listens/is an endpoint to handle for a POST request to the '/posts' route and calls the createPost function. The verifyToken middleware is passed as the second argument to the post function to verify the JWT token in the request header.
 
 /* routes */
 app.use("/auth", authRoutes);
