@@ -13,7 +13,7 @@ export const createPost = async (req, res) => {
       location: user.location,
       description,
       userPicturePath: user.picturePath,
-      picturePath: req.file.path, // use the path of the uploaded file from Cloudinary as the picturePath
+      picturePath: req.file ? req.file.path : null, // use the path of the uploaded file from Cloudinary as the picturePath, if it exists
       likes: {},
       comments: [],
     });
