@@ -3,22 +3,20 @@
 This is the server for a social network that provides several API's to a frontend for backend logic and database interaction <br>
 Based on Ed Roh's Full Stack Course with my own additions such as a refined **Comments section**, **User search** from searchbar, **Cloud hosting for images** and fixes.
 
-[Link](https://github.com/SilverMarcs/express-social-client) to web frontend repository <br>
-[Link](https://github.com/SilverMarcs/express-social-react-native) to react native frontend repository
+[**Link**](https://github.com/SilverMarcs/express-social-client) to web frontend repository <br>
+[**Link**](https://github.com/SilverMarcs/express-social-react-native) to react native frontend repository
 
 ## Demo
 
 A **demo** of the frontend is available [**here**](https://express-social.vercel.app) <br>
 \*Requires sign-up but feel free to use the dummy email and password. <br>
-**Sample account**: ``tester@tester.com`` and ``12345678``
-
+**Sample account**: `tester@tester.com` and `12345678`
 
 ### Stack used:
 
 - **Express JS** for backend api and/or routing
 - **MongoDB** for database
 - **Cloudinary** for image hosting
-
 
 ## Running locally
 
